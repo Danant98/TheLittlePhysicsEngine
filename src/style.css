@@ -1,10 +1,17 @@
-html, body { background-color: #807f7f;
+html {
+    display: flex;
+}
+
+body { 
+    background-color: #a4a0a0;
     margin: 0;
     padding: 0; 
 }
 canvas {
-    background-color: #000000;
+    background-color: #010101;
     display: block; 
+    cursor: pointer;
+    
 }
 
 
