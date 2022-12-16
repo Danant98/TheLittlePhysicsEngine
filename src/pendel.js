@@ -1,9 +1,9 @@
 
 class pendulum {
 
-    constructor(origin, r) {
+    constructor(origin, r, x, y) {
         this.origin = origin;
-        this.position = createVector();
+        this.position = createVector(x, y);
         // Setting starting angle to 45 degrees
         this.startingAngle = PI / 4;
         this.r = r 
