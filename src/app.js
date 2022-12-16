@@ -9,10 +9,11 @@ var height = canvas.height;
 var origin = createVector(width / 2, 0);
 
 function setup() {
+    createCanvas(width, height); 
     pendulum = new Pendulum(origin, 100, width / 2, height / 2);
 }
 
-function draw() {
+function draw() { 
     pendulum.draw(ctx);
 }
 

@@ -1,7 +1,7 @@
 
 class Pendulum {
 
-    constructor(origin, r, x, y) {
+    constructor(origin, r, x, y, damping = false) {
         this.origin = origin;
         this.position = createVector(x, y);
         // Setting starting angle to 45 degrees
@@ -11,19 +11,25 @@ class Pendulum {
         // Setting starting velocity and acceleration
         this.theta_ddot = 0;
         this.theta_dot = 0;
+
+        // Determine if damping is enabled
+        this.damping = damping; 
     }
 
-    draw(ctx) {
-        ctx.beginPath(this.origin);
-        ctx.lineTo(this.position.x, this.position.y);
-        ctx.Circle(this.positon.x + this.r, this.position.y, this.r);
-        ctx.stroke();
-        ctx.strokeWeight();
+    draw() {
+        line(this.origin.x, this.origin.y, this.position.x, this.position.y);
+        circle(this.position.x + this.r, this.position.y, this.r);
+        stroke();
+        strokeWeight();
+
     }
 
     update() {
         this.theta_ddot += 0;
         this.theta_dot += this.theta_ddot; 
+        if (this.damping) {
+            this.theta_dot *= 0.99;
+        }
         this.theta = this.theta_dot;
     }
 }
