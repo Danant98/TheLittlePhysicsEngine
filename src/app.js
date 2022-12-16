@@ -13,7 +13,7 @@ function setup() {
 }
 
 function draw() {
-    pendulum.draw();
+    pendulum.draw(ctx);
 }
 
 
