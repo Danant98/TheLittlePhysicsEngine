@@ -2,20 +2,10 @@
 
 
 // Global variables
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-var width = canvas.width;
-var height = canvas.height;
-var origin = createVector(width / 2, 0);
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-function setup() {
-    createCanvas(width, height); 
-    pendulum = new Pendulum(origin, 100, width / 2, height / 2);
-}
 
-function draw() { 
-    pendulum.draw(ctx);
-}
 
 
 
