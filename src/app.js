@@ -15,33 +15,41 @@ function animation() {
     requestAnimationFrame(animation);
     ctx.fillStyle = "rgba(0, 0, 0, 1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    console.log("Hello only checking if it works");
+    pendulum.drawLine(canvas.width/2, 0);
+    pendulum.drawCircle(); 
 }
 
 class Pendulum {
     
-    constructor(origin, r, x, y, damping = false) {
-        this.origin = origin;
-        this.position = (x, y);
+    constructor(x, y, r, damping = false) {
+        this.x = x;
+        this.y = y; 
         // Setting starting angle to 45 degrees
-        this.theta = PI / 4;
-        this.r = r 
-        
+        this.theta = Math.PI / 4;
+        this.r = r
         // Setting starting velocity and acceleration
         this.theta_ddot = 0;
-        this.theta_dot = 0;
-        
+        this.theta_dot = 0; 
         // Determine if damping is enabled
         this.damping = damping; 
     }
     
-    draw(ctx) {
+    drawLine(originX, originY) {
         ctx.beginPath();
-        cxt.lineWidth = 5;
-        ctx.strokeStyle = "red"; 
-        ctx.moveTo(this.origin.x, this.origin.y);
-        ctx.lineTo(this.position.x, this.position.y);
-        ctx.circleTo(this.position.x, this.position.y, this.r);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "white"; 
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+    }
+    
+    drawCircle() {
+        ctx.beginPath(); 
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.moveTo(this.x, this.y);
+        ctx.arc(10, this.y + this.r, 0, 2 * Math.PI, false);
         ctx.stroke();
     }
     
@@ -55,10 +63,7 @@ class Pendulum {
     }
 }
 
-
-let origin = (canvas.width / 2, 0); 
-let pendulum = new Pendulum(origin, 10, 
-                            canvas.width / 2, canvas.height / 2); 
+// Calling objects and methods
+let pendulum = new Pendulum(canvas.width + 150, canvas.height + 200, 10); 
 setSize(); 
 animation();
-pendulum.draw(ctx);
