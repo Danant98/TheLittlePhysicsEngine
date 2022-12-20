@@ -1,9 +1,9 @@
 // Small Physics Engine for 2D games in JavaScript 
 
-
 // Global variables
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+let damping = false;
 
 addEventListener("resize", () => setSize());
 function setSize() {
@@ -21,7 +21,8 @@ function animation() {
 
 class Pendulum {
     
-    constructor(x, y, r, damping = false) {
+    constructor(x, y, r) {
+        let origin = (0, 0); 
         this.x = x;
         this.y = y; 
         // Setting starting angle to 45 degrees
@@ -45,25 +46,28 @@ class Pendulum {
     
     drawCircle() {
         ctx.beginPath(); 
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "red";
-        ctx.fillStyle = "red";
-        ctx.moveTo(this.x, this.y);
-        ctx.arc(10, this.y + this.r, 0, 2 * Math.PI, false);
+        ctx.strokeStyle = "white";
+        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
         ctx.stroke();
+        ctx.fillStyle = "red"; 
+        ctx.fill(); 
     }
     
     update() {
         this.theta_ddot += 0;
         this.theta_dot += this.theta_ddot; 
-        if (this.damping) {
+        do {
             this.theta_dot *= 0.99;
-        }
+        } while (damping); 
         this.theta = this.theta_dot;
+    }
+
+    force() {
+
     }
 }
 
 // Calling objects and methods
-let pendulum = new Pendulum(canvas.width + 150, canvas.height + 200, 10); 
+let pendulum = new Pendulum(canvas.width + 160, canvas.height + 200, 50); 
 setSize(); 
 animation();
