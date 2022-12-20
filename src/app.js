@@ -4,6 +4,10 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let damping = false;
+let origin = new Vector(canvas.width * 1.5, 0);
+const G = 9.81; // Defining gravity
+
+
 
 addEventListener("resize", () => setSize());
 function setSize() {
@@ -15,16 +19,14 @@ function animation() {
     requestAnimationFrame(animation);
     ctx.fillStyle = "rgba(0, 0, 0, 1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    pendulum.drawLine(canvas.width/2, 0);
+    pendulum.drawLine(origin.components[0], origin.components[1]);
     pendulum.drawCircle(); 
 }
 
 class Pendulum {
     
-    constructor(x, y, r) {
-        let origin = (0, 0); 
-        this.x = x;
-        this.y = y; 
+    constructor(position, r) {
+        this.pos = position;
         // Setting starting angle to 45 degrees
         this.theta = Math.PI / 4;
         this.r = r
@@ -40,14 +42,14 @@ class Pendulum {
         ctx.lineWidth = 5;
         ctx.strokeStyle = "white"; 
         ctx.moveTo(originX, originY);
-        ctx.lineTo(this.x, this.y);
+        ctx.lineTo(this.pos.components[0], this.pos.components[1]);
         ctx.stroke();
     }
     
     drawCircle() {
         ctx.beginPath(); 
         ctx.strokeStyle = "white";
-        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+    ctx.arc(this.pos.components[0], this.pos.components[1], this.r, 0, 2 * Math.PI, false);
         ctx.stroke();
         ctx.fillStyle = "red"; 
         ctx.fill(); 
@@ -63,11 +65,12 @@ class Pendulum {
     }
 
     force() {
-
+        return false; 
     }
 }
 
 // Calling objects and methods
-let pendulum = new Pendulum(canvas.width + 160, canvas.height + 200, 50); 
+let pos = new Vector(canvas.width * 2, canvas.height + 180);
+let pendulum = new Pendulum(pos, 50); 
 setSize(); 
 animation();
