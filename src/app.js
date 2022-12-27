@@ -70,14 +70,15 @@ class Pendulum {
     }
     
     update() {
-        this.theta_ddot.add(-(g / L) * Math.sin(this.theta));
-        console.log(this.theta_ddot);
-        this.theta_dot.add(this.theta_ddot); 
+        this.theta_ddot += -(g / L) * Math.sin(this.theta);
+        this.theta_dot += this.theta_ddot; 
         if (this.damping) {
-            this.theta_dot.mul(0.99);
+            this.theta_dot *= 0.99;
         }
-        this.theta.add(this.theta_dot);
-        this.pos = new Vector(L * Math.sin(this.theta), L * Math.cos(this.theta));
+        this.theta += this.theta_dot;
+        let new_pos = new Vector(L * Math.sin(this.theta), 
+                                 L * Math.cos(this.theta)); 
+        this.pos.add(new_pos);
     }
 }
 
