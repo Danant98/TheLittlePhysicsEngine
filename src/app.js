@@ -4,8 +4,8 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let origin = new Vector(canvas.width * 1.5, 0);
-const g = 9.81; // Defining gravity
-
+const g = 9.81; // Gravitational acceleration of Earth
+const L = 1; // Length of pendulum
 
 
 addEventListener("resize", () => setSize());
@@ -24,6 +24,7 @@ function animation() {
                 canvas.height);
     pendulum.drawLine(origin.components[0], origin.components[1]);
     pendulum.drawCircle(); 
+    pendulum.update();
 }
 
 class Pendulum {
@@ -69,16 +70,14 @@ class Pendulum {
     }
     
     update() {
-        this.theta_ddot.add(0);
+        this.theta_ddot.add(-(g / L) * Math.sin(this.theta));
+        console.log(this.theta_ddot);
         this.theta_dot.add(this.theta_ddot); 
-        do {
+        if (this.damping) {
             this.theta_dot.mul(0.99);
-        } while (damping); 
+        }
         this.theta.add(this.theta_dot);
-    }
-
-    force() {
-        return; 
+        this.pos = new Vector(L * Math.sin(this.theta), L * Math.cos(this.theta));
     }
 }
 
