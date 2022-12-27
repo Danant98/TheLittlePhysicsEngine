@@ -3,9 +3,8 @@
 // Global variables
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let damping = false;
 let origin = new Vector(canvas.width * 1.5, 0);
-const G = 9.81; // Defining gravity
+const g = 9.81; // Defining gravity
 
 
 
@@ -18,14 +17,22 @@ function setSize() {
 function animation() {
     requestAnimationFrame(animation);
     ctx.fillStyle = "rgba(0, 0, 0, 1)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(
+                0, 
+                0, 
+                canvas.width, 
+                canvas.height);
     pendulum.drawLine(origin.components[0], origin.components[1]);
     pendulum.drawCircle(); 
 }
 
 class Pendulum {
     
-    constructor(position, r) {
+    constructor(
+        position, 
+        r, 
+        damping = false
+        ) {
         this.pos = position;
         // Setting starting angle to 45 degrees
         this.theta = Math.PI / 4;
@@ -49,23 +56,29 @@ class Pendulum {
     drawCircle() {
         ctx.beginPath(); 
         ctx.strokeStyle = "white";
-    ctx.arc(this.pos.components[0], this.pos.components[1], this.r, 0, 2 * Math.PI, false);
+        ctx.arc(
+            this.pos.components[0], 
+            this.pos.components[1], 
+            this.r, 
+            0, 
+            2 * Math.PI, 
+            false);
         ctx.stroke();
         ctx.fillStyle = "red"; 
         ctx.fill(); 
     }
     
     update() {
-        this.theta_ddot += 0;
-        this.theta_dot += this.theta_ddot; 
+        this.theta_ddot.add(0);
+        this.theta_dot.add(this.theta_ddot); 
         do {
-            this.theta_dot *= 0.99;
+            this.theta_dot.mul(0.99);
         } while (damping); 
-        this.theta = this.theta_dot;
+        this.theta.add(this.theta_dot);
     }
 
     force() {
-        return false; 
+        return; 
     }
 }
 
