@@ -37,7 +37,7 @@ class Pendulum {
         this.pos = position;
         // Setting starting angle to 45 degrees
         this.theta = Math.PI / 4;
-        this.r = r
+        this.r = r;
         // Setting starting velocity and acceleration
         this.theta_ddot = 0;
         this.theta_dot = 0; 
@@ -84,6 +84,6 @@ class Pendulum {
 
 // Calling objects and methods
 let pos = new Vector(canvas.width * 2, canvas.height + 180);
-let pendulum = new Pendulum(pos, 50); 
+let pendulum = new Pendulum(pos, 20); 
 setSize(); 
 animation();
